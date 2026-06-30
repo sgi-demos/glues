@@ -50,6 +50,14 @@
    #else
       #define GLAPI __declspec(dllimport)
    #endif
+#elif defined(GLUES_GL4ES)
+   #include <GL/gl.h>
+   #ifndef GLAPI
+      #define GLAPI extern
+   #endif
+   #ifndef APIENTRY
+      #define APIENTRY
+   #endif
 #else
    #error "Platform is unsupported"
 #endif
