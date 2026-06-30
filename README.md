@@ -1,14 +1,19 @@
 
-GLU ES (version 1.5)
+GLUES fork for FreeGLUT SDL2/GLES2 port
 
+This fork enables building and using glues with the SDL2/GLES2/GL4ES fork 
+of freeglut, found at [sgi-demos/freeglut](https://github.com/sgi-demos/freeglut).
+
+Original README:
+```
 This port is based on original GLU 1.3 and has original libutil, libtess and
 nurbs libraries.
 
 History:
 
-1.5 - NURBS support has added. Updated  HTML  documentation  to  reflect  the
+-1.5 - NURBS support has added. Updated  HTML  documentation  to  reflect  the
       changes. New tests were added for NURBS.
-1.4 - miscellaneous non-critical  fixes,  HTML  documentation has been added.
+-1.4 - miscellaneous non-critical  fixes,  HTML  documentation has been added.
       Support for PowerVR OpenGL ES 1.1 emulator for Win32 has been added.
 1.3 - libtess and tesselation tests (QNX native and SDL 1.3) have been added.
 1.2 - SDL 1.3 based tests were added.
@@ -20,3 +25,4 @@ History:
 
 // 11.11.2009
 // Mike Gorchak <mike@malva.ua>, <lestat@i.com.ua>
+```
