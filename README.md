@@ -1,11 +1,12 @@
+glues 1.5 for freeglut SDL2/GLES2
+=================================
 
-GLUES fork for FreeGLUT SDL2/GLES2 port
+This fork enables building and running glues with the freeglut SDL2/GLES2 port, found at [sgi-demos/freeglut](https://github.com/sgi-demos/freeglut).
 
-This fork enables building and using glues with the SDL2/GLES2/GL4ES fork 
-of freeglut, found at [sgi-demos/freeglut](https://github.com/sgi-demos/freeglut).
 
-Original README:
 ```
+Original README
+
 This port is based on original GLU 1.3 and has original libutil, libtess and
 nurbs libraries.
 
