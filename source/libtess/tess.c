@@ -56,8 +56,8 @@
 /*ARGSUSED*/ static void APIENTRY noVertex(void* data) {}
 /*ARGSUSED*/ static void APIENTRY noEnd(void) {}
 /*ARGSUSED*/ static void APIENTRY noError(GLenum errnum) {}
-/*ARGSUSED*/ static void APIENTRY noCombine(GLfloat coords[3], void *data[4],
-                                            GLfloat weight[4], void **dataOut) {}
+/*ARGSUSED*/ static void APIENTRY noCombine(GLdouble coords[3], void *data[4],
+                                            GLdouble weight[4], void **dataOut) {}
 /*ARGSUSED*/ static void APIENTRY noMesh(GLUmesh* mesh) {}
 
 /*ARGSUSED*/ void APIENTRY __gl_noBeginData(GLenum type, void* polygonData) {}
@@ -65,8 +65,8 @@
 /*ARGSUSED*/ void APIENTRY __gl_noVertexData(void* data, void* polygonData) {}
 /*ARGSUSED*/ void APIENTRY __gl_noEndData(void* polygonData) {}
 /*ARGSUSED*/ void APIENTRY __gl_noErrorData( GLenum errnum, void* polygonData) {}
-/*ARGSUSED*/ void APIENTRY __gl_noCombineData(GLfloat coords[3], void* data[4],
-                                              GLfloat weight[4], void** outData,
+/*ARGSUSED*/ void APIENTRY __gl_noCombineData(GLdouble coords[3], void* data[4],
+                                              GLdouble weight[4], void** outData,
                                               void* polygonData) {}
 
 /* Half-edges are allocated in pairs (see mesh.c) */
@@ -250,7 +250,7 @@ GLAPI void APIENTRY gluGetTessProperty(GLUtesselator* tess, GLenum which, GLdoub
                   tess->windingRule==GLU_TESS_WINDING_POSITIVE ||
                   tess->windingRule==GLU_TESS_WINDING_NEGATIVE ||
                   tess->windingRule==GLU_TESS_WINDING_ABS_GEQ_TWO);
-           *value=(GLfloat)tess->windingRule;
+           *value=(GLdouble)tess->windingRule;
            break;
       case GLU_TESS_BOUNDARY_ONLY:
            assert(tess->boundaryOnly==TRUE || tess->boundaryOnly==FALSE);
@@ -317,11 +317,11 @@ GLAPI void APIENTRY gluTessCallback(GLUtesselator* tess, GLenum which, _GLUfuncp
            return;
       case GLU_TESS_COMBINE:
            tess->callCombine=(fn==NULL) ? &noCombine:
-              (void (APIENTRY*)(GLfloat[3], void*[4], GLfloat[4], void**))fn;
+              (void (APIENTRY*)(GLdouble[3], void*[4], GLdouble[4], void**))fn;
            return;
       case GLU_TESS_COMBINE_DATA:
            tess->callCombineData=(fn==NULL) ? &__gl_noCombineData:
-              (void (APIENTRY*)(GLfloat [3], void*[4], GLfloat[4], void**, void*))fn;
+              (void (APIENTRY*)(GLdouble [3], void*[4], GLdouble[4], void**, void*))fn;
            return;
       case GLU_TESS_MESH:
            tess->callMesh=(fn==NULL) ? &noMesh: (void (APIENTRY*)(GLUmesh*))fn;
@@ -332,7 +332,7 @@ GLAPI void APIENTRY gluTessCallback(GLUtesselator* tess, GLenum which, _GLUfuncp
    }
 }
 
-static int AddVertex(GLUtesselator* tess, GLfloat coords[3], void* data)
+static int AddVertex(GLUtesselator* tess, GLdouble coords[3], void* data)
 {
    GLUhalfEdge* e=NULL;
 
@@ -381,7 +381,7 @@ static int AddVertex(GLUtesselator* tess, GLfloat coords[3], void* data)
    return 1;
 }
 
-static void CacheVertex(GLUtesselator* tess, GLfloat coords[3], void* data)
+static void CacheVertex(GLUtesselator* tess, GLdouble coords[3], void* data)
 {
    CachedVertex* v=&tess->cache[tess->cacheCount];
 
@@ -421,7 +421,7 @@ void APIENTRY gluTessVertex(GLUtesselator* tess, GLdouble coords[3], void* data)
 {
    int i;
    int tooLarge=FALSE;
-   GLfloat x, clamped[3];
+   GLdouble x, clamped[3];
 
    RequireState(tess, T_IN_CONTOUR);
 

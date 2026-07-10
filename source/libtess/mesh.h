@@ -121,8 +121,8 @@ struct GLUvertex
    void*         data;          /* client's data */
 
    /* Internal data (keep hidden) */
-   GLfloat coords[3];           /* vertex location in 3D */
-   GLfloat s, t;                /* projection onto the sweep plane */
+   GLdouble coords[3];           /* vertex location in 3D */
+   GLdouble s, t;                /* projection onto the sweep plane */
    long    pqHandle;            /* to allow deletion from priority queue */
 };
 

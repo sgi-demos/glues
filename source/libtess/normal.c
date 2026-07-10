@@ -48,7 +48,7 @@
 #undef ABS
 #define ABS(x) ((x)<0 ? -(x) : (x))
 
-static int LongAxis(GLfloat v[3])
+static int LongAxis(GLdouble v[3])
 {
    int i=0;
 
@@ -64,11 +64,11 @@ static int LongAxis(GLfloat v[3])
    return i;
 }
 
-static void ComputeNormal(GLUtesselator* tess, GLfloat norm[3])
+static void ComputeNormal(GLUtesselator* tess, GLdouble norm[3])
 {
    GLUvertex* v, *v1, *v2;
-   GLfloat c, tLen2, maxLen2;
-   GLfloat maxVal[3], minVal[3], d1[3], d2[3], tNorm[3];
+   GLdouble c, tLen2, maxLen2;
+   GLdouble maxVal[3], minVal[3], d1[3], d2[3], tNorm[3];
    GLUvertex* maxVert[3], *minVert[3];
    GLUvertex* vHead=&tess->mesh->vHead;
    int i;
@@ -150,7 +150,7 @@ static void ComputeNormal(GLUtesselator* tess, GLfloat norm[3])
 
 static void CheckOrientation(GLUtesselator* tess)
 {
-   GLfloat area;
+   GLdouble area;
    GLUface* f, *fHead=&tess->mesh->fHead;
    GLUvertex* v, *vHead=&tess->mesh->vHead;
    GLUhalfEdge* e;
@@ -216,9 +216,9 @@ extern int RandomSweep;
 void __gl_projectPolygon(GLUtesselator* tess)
 {
    GLUvertex *v, *vHead=&tess->mesh->vHead;
-   GLfloat norm[3];
-   GLfloat* sUnit;
-   GLfloat* tUnit;
+   GLdouble norm[3];
+   GLdouble* sUnit;
+   GLdouble* tUnit;
    int i;
    int computedNormal=FALSE;
 

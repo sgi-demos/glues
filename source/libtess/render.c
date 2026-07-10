@@ -405,7 +405,7 @@ void __gl_renderBoundary(GLUtesselator* tess, GLUmesh* mesh)
 
 #define SIGN_INCONSISTENT 2
 
-static int ComputeNormal(GLUtesselator* tess, GLfloat norm[3], int check)
+static int ComputeNormal(GLUtesselator* tess, GLdouble norm[3], int check)
 /*
  * If check==FALSE, we compute the polygon normal and place it in norm[].
  * If check==TRUE, we check that each triangle in the fan from v0 has a
@@ -418,7 +418,7 @@ static int ComputeNormal(GLUtesselator* tess, GLfloat norm[3], int check)
    CachedVertex* v0=tess->cache;
    CachedVertex* vn=v0+tess->cacheCount;
    CachedVertex* vc;
-   GLfloat dot, xc, yc, zc, xp, yp, zp, n[3];
+   GLdouble dot, xc, yc, zc, xp, yp, zp, n[3];
    int sign=0;
 
    /* Find the polygon normal.  It is important to get a reasonable
@@ -511,7 +511,7 @@ GLboolean __gl_renderCache(GLUtesselator* tess)
    CachedVertex* v0=tess->cache;
    CachedVertex* vn=v0+tess->cacheCount;
    CachedVertex* vc;
-   GLfloat norm[3];
+   GLdouble norm[3];
    int sign;
 
    if (tess->cacheCount<3)

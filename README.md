@@ -1,7 +1,27 @@
-glues 1.5 for freeglut SDL2/GLES2
-=================================
+glues 1.5 for the sgi-demos SDL2/GLES2 ports
+============================================
 
-This fork enables building and running glues with the freeglut SDL2/GLES2 port, found at [sgi-demos/freeglut](https://github.com/sgi-demos/freeglut).
+This fork is the shared, canonical GLU-for-GLES used by the sgi-demos
+ports (freeglut-sdl2-ogles2/newave, inventor-sdl2-gles2). Reconciled
+changes over upstream glues:
+
+- **Standard GLU ABI throughout**: the public tess API *and* the libtess
+  internals use GLdouble (upstream's GLES port had float-converted them,
+  which broke callers compiled against standard `GL/glu.h` prototypes and
+  lost the precision libtess' sweep algorithm needs).
+- **`GLUES_GL4ES`** build flavor: compiles against gl4es's `<GL/gl.h>`;
+  on Apple/Emscripten `glues.h` self-includes gl4es's `GL/glu_mangle.h`
+  so the glu* definitions get the mangled (mglu*) names consumers see.
+  (Build systems may still `-include GL/glu_mangle.h` — it's harmless
+  and covers TUs that reach definitions before `glues.h`.)
+- **`GLUES_USE_HW_MIPMAP`** (opt-in, gl4es): power-of-two
+  `gluBuild2DMipmaps` defers to gl4es's hardware `GL_GENERATE_MIPMAP`;
+  the CPU-built chain samples black under gl4es `*_MIPMAP_*` min
+  filters. NPOT input keeps the CPU path.
+
+The Makefile builds the core subset (project/mipmap/quad/error/registry)
+for the freeglut port; the Inventor port builds the full library
+(core + libtess + libnurbs) via its `tools/build-glues-*.sh` scripts.
 
 
 ```

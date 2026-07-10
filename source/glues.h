@@ -53,7 +53,21 @@
       #define GLAPI __declspec(dllimport)
    #endif
 #elif defined(GLUES_GL4ES)
+   /* gl4es: desktop GL 1.x API implemented on GLES2. */
    #include <GL/gl.h>
+   #include <GL/glext.h>
+   /*
+    * On Emscripten and macOS, gl4es mangles all GL/GLU entry points
+    * (gl4es_gl*, mglu*) to avoid clashing with the platform's own GL.
+    * Pull in gl4es's glu_mangle.h here so glues' own GLU *definitions*
+    * get the same mangled names consumers compiled against gl4es's
+    * <GL/glu.h> reference (a build-system `-include GL/glu_mangle.h`
+    * remains harmless - the header is include-guarded). On Linux gl4es
+    * does not mangle, so this is a no-op there.
+    */
+   #if defined(__EMSCRIPTEN__) || defined(__APPLE__)
+      #include <GL/glu_mangle.h>
+   #endif
    #ifndef GLAPI
       #define GLAPI extern
    #endif
@@ -130,6 +144,11 @@ typedef struct GLUnurbs GLUnurbs;
 
 typedef GLUquadric GLUquadricObj;
 typedef GLUtesselator GLUtesselatorObj;
+#ifndef GLUES_HAS_GLDOUBLE
+#define GLUES_HAS_GLDOUBLE
+typedef double GLdouble;  /* CPU-side tess math; standard GLU ABI */
+#endif
+
 typedef GLUtesselator GLUtriangulatorObj;
 typedef GLUnurbs GLUnurbsObj;
 

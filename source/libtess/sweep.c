@@ -117,7 +117,7 @@ static int EdgeLeq(GLUtesselator* tess, ActiveRegion* reg1, ActiveRegion* reg2)
    GLUvertex* event=tess->event;
    GLUhalfEdge* e1;
    GLUhalfEdge* e2;
-   GLfloat t1, t2;
+   GLdouble t1, t2;
 
    e1=reg1->eUp;
    e2=reg2->eUp;
@@ -474,9 +474,9 @@ static void AddRightEdges(GLUtesselator* tess, ActiveRegion* regUp,
 }
 
 static void CallCombine(GLUtesselator* tess, GLUvertex* isect,
-                        void* data[4], GLfloat weights[4], int needed)
+                        void* data[4], GLdouble weights[4], int needed)
 {
-   GLfloat coords[3];
+   GLdouble coords[3];
 
    /* Copy coord data in case the callback changes it. */
    coords[0]=isect->coords[0];
@@ -514,7 +514,7 @@ static void CallCombine(GLUtesselator* tess, GLUvertex* isect,
 static void SpliceMergeVertices(GLUtesselator* tess, GLUhalfEdge *e1, GLUhalfEdge* e2)
 {
    void* data[4]={NULL, NULL, NULL, NULL};
-   GLfloat weights[4]={0.5f, 0.5f, 0.0f, 0.0f};
+   GLdouble weights[4]={0.5f, 0.5f, 0.0f, 0.0f};
 
    data[0]=e1->Org->data;
    data[1]=e2->Org->data;
@@ -533,10 +533,10 @@ static void SpliceMergeVertices(GLUtesselator* tess, GLUhalfEdge *e1, GLUhalfEdg
  * relative distance to "isect".
  */
 static void VertexWeights(GLUvertex* isect, GLUvertex* org, GLUvertex* dst,
-                          GLfloat* weights)
+                          GLdouble* weights)
 {
-   GLfloat t1=VertL1dist(org, isect);
-   GLfloat t2=VertL1dist(dst, isect);
+   GLdouble t1=VertL1dist(org, isect);
+   GLdouble t2=VertL1dist(dst, isect);
 
    weights[0]=0.5f*t2/(t1+t2);
    weights[1]=0.5f*t1/(t1+t2);
@@ -555,7 +555,7 @@ static void GetIntersectData(GLUtesselator* tess, GLUvertex* isect,
                              GLUvertex* orgLo, GLUvertex* dstLo)
 {
    void* data[4];
-   GLfloat weights[4];
+   GLdouble weights[4];
 
    data[0]=orgUp->data;
    data[1]=dstUp->data;
@@ -742,7 +742,7 @@ static int CheckForIntersect(GLUtesselator* tess, ActiveRegion* regUp)
    GLUvertex* orgLo=eLo->Org;
    GLUvertex* dstUp=eUp->Dst;
    GLUvertex* dstLo=eLo->Dst;
-   GLfloat tMinUp, tMaxLo;
+   GLdouble tMinUp, tMaxLo;
    GLUvertex  isect;
    GLUvertex* orgMin;
    GLUhalfEdge* e;
@@ -1413,7 +1413,7 @@ static void SweepEvent(GLUtesselator* tess, GLUvertex* vEvent)
  * We add two sentinel edges above and below all other edges,
  * to avoid special cases at the top and bottom.
  */
-static void AddSentinel(GLUtesselator* tess, GLfloat t)
+static void AddSentinel(GLUtesselator* tess, GLdouble t)
 {
    GLUhalfEdge*  e;
    ActiveRegion* reg=(ActiveRegion*)memAlloc(sizeof(ActiveRegion));

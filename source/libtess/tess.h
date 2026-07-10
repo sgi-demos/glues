@@ -55,7 +55,7 @@ enum TessState {T_DORMANT, T_IN_POLYGON, T_IN_CONTOUR};
 
 typedef struct CachedVertex
 {
-   GLfloat coords[3];
+   GLdouble coords[3];
    void*   data;
 } CachedVertex;
 
@@ -71,12 +71,12 @@ struct GLUtesselator
    void (APIENTRY* callError)(GLenum errnum);
 
    /*** state needed for projecting onto the sweep plane ***/
-   GLfloat normal[3]; /* user-specified normal (if provided) */
-   GLfloat sUnit[3];  /* unit vector in s-direction (debugging) */
-   GLfloat tUnit[3];  /* unit vector in t-direction (debugging) */
+   GLdouble normal[3]; /* user-specified normal (if provided) */
+   GLdouble sUnit[3];  /* unit vector in s-direction (debugging) */
+   GLdouble tUnit[3];  /* unit vector in t-direction (debugging) */
 
    /*** state needed for the line sweep ***/
-   GLfloat   relTolerance;      /* tolerance for merging features */
+   GLdouble   relTolerance;      /* tolerance for merging features */
    GLenum    windingRule;       /* rule for determining polygon interior */
    GLboolean fatalError;        /* fatal error: needed combine callback */
 
@@ -84,8 +84,8 @@ struct GLUtesselator
    PriorityQ* pq;               /* priority queue of vertex events */
    GLUvertex* event;            /* current sweep event being processed */
 
-   void (APIENTRY* callCombine)(GLfloat coords[3], void*  data[4],
-                                GLfloat weight[4], void** outData);
+   void (APIENTRY* callCombine)(GLdouble coords[3], void*  data[4],
+                                GLdouble weight[4], void** outData);
 
   /*** state needed for rendering callbacks (see render.c) ***/
   GLboolean     flagBoundary;   /* mark boundary edges (use EdgeFlag) */
@@ -111,8 +111,8 @@ struct GLUtesselator
   void (APIENTRY* callVertexData)(void* data, void* polygonData);
   void (APIENTRY* callEndData)(void* polygonData);
   void (APIENTRY* callErrorData)(GLenum errnum, void *polygonData);
-  void (APIENTRY* callCombineData)(GLfloat coords[3], void* data[4],
-                                   GLfloat weight[4], void** outData,
+  void (APIENTRY* callCombineData)(GLdouble coords[3], void* data[4],
+                                   GLdouble weight[4], void** outData,
                                    void* polygonData);
 
   jmp_buf env;          /* place to jump to when memAllocs fail */
@@ -125,8 +125,8 @@ GLAPI void APIENTRY __gl_noEdgeFlagData(GLboolean boundaryEdge, void* polygonDat
 GLAPI void APIENTRY __gl_noVertexData(void* data, void* polygonData);
 GLAPI void APIENTRY __gl_noEndData(void* polygonData);
 GLAPI void APIENTRY __gl_noErrorData(GLenum errnum, void* polygonData);
-GLAPI void APIENTRY __gl_noCombineData(GLfloat coords[3], void* data[4],
-                                       GLfloat weight[4], void** outData,
+GLAPI void APIENTRY __gl_noCombineData(GLdouble coords[3], void* data[4],
+                                       GLdouble weight[4], void** outData,
                                        void* polygonData);
 
 #define CALL_BEGIN_OR_BEGIN_DATA(a)                     \
