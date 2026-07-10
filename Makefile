@@ -37,7 +37,7 @@ WARN_OFF = -Wno-implicit-function-declaration -Wno-unused-value \
            -Wno-deprecated-declarations -Wno-unused-but-set-variable
 
 # ---- sources (the "core" subset; matches flwbox's proven set) ----
-SRC = source/glues_project.c source/glues_mipmap.c \
+SRC = source/glues_project.c source/glues_mipmap.c source/glues_quad.c \
       source/glues_error.c   source/glues_registry.c
 
 # gl4es headers first so <GL/gl.h> resolves to gl4es' header (NOT gl4es' GL/glu.h,
